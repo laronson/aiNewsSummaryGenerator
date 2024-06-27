@@ -7,9 +7,9 @@ The AI News Summary Generator gets the headlines from the technology section of 
 Anthropic Client Parameters:
 
 - Model: claude-3-haiku-20240307
-- System Description: You are working as a blogger trying to summarize the AI news of the day.
+- System Description: You are working as a blogger trying to summarize the AI news of the day. When you answer, do not add any extra text. Just respond with the summary.
 - Messaging Role: user
-- Prompt: Here are some headlines realated to AI from todays news, can you write me a one paragraph summary of what is happening today? Please do not add any extra text. Just tell me the summary.\n{headlines}
+- Prompt: Here are some headlines realated to AI from todays news, can you write me a one paragraph summary of what is happening today?\n{headlines}
 
 ## Application External Requirements
 

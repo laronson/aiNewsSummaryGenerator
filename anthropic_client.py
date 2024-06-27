@@ -20,6 +20,17 @@ class AnthropicClient:
         else:
             print("Instance already exists")
         return cls._instance
+    
+    def send_message(self, prompt:str):
+        message = self.client.messages.create(
+            model=self.model,
+            max_tokens=2000, # The number of tokens claud will generate in its response before stopping (probably to restrict cost and usage)
+            temperature=0.0,
+            messages=[
+                {"role":"user", "content": prompt}
+            ]
+        )
+        return message.content[0].text
 
 
     def analyze_headlines(self, headlines:str):
@@ -28,14 +39,18 @@ class AnthropicClient:
                 model=self.model,
                 max_tokens=1000,
                 temperature=0,
-                system="You are working as a blogger trying to summarize the AI news of the day.",
+                #Provide context, instruction and guidelines to claud as to how it should formulate its response
+                #Use this to set rules for how the system should respond.  In the first iteration of this project, I told
+                #claud not to only summarize values and not to add any extra words or content.  That should have gone
+                #here
+                system="You are working as a blogger trying to summarize the AI news of the day.  When you answer, do not add any extra text.  Just respond with the summary.",
                 messages=[
                     {
                         "role": "user",
                         "content": [
                             {
                                 "type": "text",
-                                "text": f"Here are some headlines realated to AI from todays news, can you write me a one paragraph summary of what is happening today? Please do not add any extra text.  Just tell me the summary.\n{headlines}"
+                                "text": f"Here are some headlines realated to AI from todays news, can you write me a one paragraph summary of what is happening today?\n{headlines}"
                             }
                         ]
                     }
